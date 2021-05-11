@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Navbar from "./components/Navbar";
+import PokemonDetail from "./components/PokemonDetail";
+import PokemonList from "./components/PokemonList";
+import TypeList from "./components/TypeList";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-function App() {
+const App = () => {
+  const [pokemons, setPokemons] = useState([]);
+
+  useEffect(() => {
+    const getPokemons = async () => {
+      const pokemonsFromServer = await fetchPokemons();
+      setPokemons(pokemonsFromServer);
+    };
+
+    getPokemons();
+  }, []);
+
+  // Fetch pokemons
+  const fetchPokemons = async () => {
+    const res = await fetch("https://pokeapi.co/api/v2/pokemon");
+    const data = await res.json();
+
+    return data.results;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <PokemonList pokemons={pokemons} />
+        <Route path="/types" component={TypeList} />
+        {<PokemonDetail />}
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
