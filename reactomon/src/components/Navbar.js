@@ -1,12 +1,18 @@
-import { Link } from "react-router-dom";
+import { Ul, Li, NavLink, ToggleButton } from "./styleElemets/NavbarStyle";
 
 const Navbar = () => {
   return (
-    <div>
-      <Link to="/pokemons">Pokemons</Link>
-      <br />
-      <Link to="/types">Types</Link>
-    </div>
+    <Ul>
+      <Li>
+        <NavLink to="/pokemons">Pokemons</NavLink>
+      </Li>
+      <Li>
+        <NavLink to="/types">Types</NavLink>
+      </Li>
+      <Li>
+        <ToggleButton />
+      </Li>
+    </Ul>
   );
 };
 
